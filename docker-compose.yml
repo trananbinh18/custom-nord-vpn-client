@@ -1,0 +1,22 @@
+services:
+    vpn:
+      image: trananbinh18/custom-nord-vpn-client
+      container_name: vpn
+      cap_add:
+        - net_admin
+      sysctls:
+        - net.ipv6.conf.all.disable_ipv6=0
+      networks:
+        apps-network:
+            aliases:
+              - vpn
+      tmpfs:
+        - /run
+        - /tmp
+      restart: unless-stopped
+      volumes:
+      - ./data:/var/lib/nordvpn 
+
+networks:
+  apps-network:
+
