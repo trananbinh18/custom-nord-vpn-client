@@ -1,6 +1,6 @@
 services:
     vpn:
-      image: trananbinh18/custom-nord-vpn-client
+      image: ghcr.io/trananbinh18/custom-nord-vpn-client
       container_name: vpn
       cap_add:
         - net_admin
