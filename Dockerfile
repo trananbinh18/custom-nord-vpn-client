@@ -1,22 +1,17 @@
-FROM ubuntu:24.04
-
+FROM arm64v8/ubuntu:20.04
+SHELL ["/bin/bash", "-c"]
 # Install necessary packages and NordVPN
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget apt-transport-https ca-certificates && \
-    wget -qO /etc/apt/trusted.gpg.d/nordvpn_public.asc https://repo.nordvpn.com/gpg/nordvpn_public.asc && \
-    echo "deb https://repo.nordvpn.com/deb/nordvpn/debian stable main" > /etc/apt/sources.list.d/nordvpn.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends nordvpn && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Copy entrypoint and health check scripts into the container
 COPY nordvpn_entrypoint.sh /usr/local/bin/nordvpn_entrypoint.sh
 COPY check_nordvpn_status.sh /usr/local/bin/check_nordvpn_status.sh
+COPY setup_vpn.sh /usr/local/bin/setup_vpn.sh
+
 
 # Make the scripts executable
-RUN chmod +x /usr/local/bin/nordvpn_entrypoint.sh /usr/local/bin/check_nordvpn_status.sh
+RUN chmod +x /usr/local/bin/setup_vpn.sh /usr/local/bin/nordvpn_entrypoint.sh /usr/local/bin/check_nordvpn_status.sh
 
+RUN /usr/local/bin/setup_vpn.sh 
 # Use the entry point script
 
 ENTRYPOINT ["/usr/local/bin/nordvpn_entrypoint.sh"]
