@@ -11,8 +11,10 @@ if nordvpn account | grep -q "You are not logged in"; then
   /bin/bash -c "nordvpn login"
 fi
 
+
+nordvpn set lan-discovery on
 # Connect to NordVPN
-nordvpn connect
+nordvpn connect P2P
 
 # Keep the container running
 if [ $# -eq 0 ]; then
