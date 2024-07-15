@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -x 
 apt-get update
 apt-get install -y --no-install-recommends wget apt-transport-https ca-certificates
 wget -qO /etc/apt/trusted.gpg.d/nordvpn_public.asc https://repo.nordvpn.com/gpg/nordvpn_public.asc
